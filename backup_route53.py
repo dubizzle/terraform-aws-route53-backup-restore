@@ -79,7 +79,7 @@ def handle(event, context):
 
     for zone in hosted_zones:
         zone_records = route53_utils.get_route53_zone_records(zone['Id'])
-        s3.put_object(Body=json.dumps(zone_records).encode(), Bucket=bucket_name, Key="{}/{}.json".format(timestamp, zone['Id']))
+        s3.put_object(Body=json.dumps(zone_records).encode(), Bucket=bucket_name, Key="{}/{}-{}.json".format(timestamp, zone['Id'], zone['Name']))
 
     health_checks = route53_utils.get_route53_health_checks()
     for health_check in health_checks:

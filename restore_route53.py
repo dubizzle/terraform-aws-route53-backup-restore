@@ -65,7 +65,7 @@ def handle(event, context):
     zones = json.loads(get_s3_object_as_string('{}/zones.json'.format(backup_time)))
     for zone_obj in zones:
         zone = create_zone_if_not_exist(zone_obj)
-        backup_zone_records = json.loads(get_s3_object_as_string('{}/{}.json'.format(backup_time, zone_obj['Id'])))
+        backup_zone_records = json.loads(get_s3_object_as_string('{}/{}-{}.json'.format(backup_time, zone_obj['Id'], zone['Name'])))
         current_zone_records = route53_utils.get_route53_zone_records(zone['Id'])
 
         records_to_upsert = list(filter(lambda x: x not in current_zone_records, backup_zone_records))
